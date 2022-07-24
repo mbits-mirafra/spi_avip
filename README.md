@@ -1,12 +1,12 @@
-# Accelerated Verification IP for SPI Protocol
+# Accelerated VIP for SPI Protocol
 
-The whole idea of using Accelerated VIP is to push the synthesizable part of the testbench into the separate top module along with the interface and it is named as HDL TOP. and the unsynthesizable part is pushed into the HVL TOP it provides the ability to run the longer tests quickly. This particular testbench can be used for the simulation as well as the emulation based on mode of operation.
+The idea of using Accelerated VIP is to push the synthesizable part of the testbench into the separate top module along with the interface and it is named as HDL TOP and the unsynthesizable part is pushed into the HVL TOP. This setup provides the ability to run the longer tests quickly. This particular testbench can be used for the simulation as well as the emulation based on mode of operation.
 
 
 # Developers, Welcome
-For source code browsing, we recommend using the fully-indexed and searchable mirror at https://cs.opensource.google/verible/verible.  
+We believe in growing together and if you'd like to contribute, please do check out the contributing guide below:  
+-- link --
 
-If you'd like to contribute, check out the contributing guide and the development resources.  
 
 # Installation - Get the VIP collateral from the GitHub repository
 
@@ -82,12 +82,16 @@ ex: make regression testlist_name=spi_simple_fd_regression.list
 imc -load cov_work/scope/test/ &
 ```
 
-
-
+## Architecture Diagram  
 ![Fig 2 1 spi_avip_tb_architecture drawio](https://user-images.githubusercontent.com/104111334/165571701-3ed92657-d80c-44d9-8e5a-e622436ba047)
 
-## Architectural Document 
+## Technical Document 
 https://docs.google.com/document/d/e/2PACX-1vS4DnKb5akCCC_zODun8u6wgevKRXrBYgc44t6a4oQnUtdy2bDF_CfOGEXV9rsc6gddOoZ2uJYJHnrI/pub
 
-## User Guide to start using the project 
+## User Guide  
 https://docs.google.com/document/d/e/2PACX-1vTGXJSuW7pp7cO2nlFyMgjifRK2dPp5kX11YQ_JrvLsQZLpZvcdBv6Oy6OQ7WH_vvCJ3RXf-XzD4rTE/pub
+
+## Contact Mirafra Team  
+muneebullashariff@mirafra.com  
+alokk@mirafra.com  
+vishwanath@mirafra.com  
