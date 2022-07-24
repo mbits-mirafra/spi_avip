@@ -2,11 +2,25 @@
 
 The idea of using Accelerated VIP is to push the synthesizable part of the testbench into the separate top module along with the interface and it is named as HDL TOP and the unsynthesizable part is pushed into the HVL TOP. This setup provides the ability to run the longer tests quickly. This particular testbench can be used for the simulation as well as the emulation based on mode of operation.
 
+# Key Features  
+1. Supports Full Duplex SPI System 
+2. Configurable shift register, basically of multiple of 2 bits (depends on character length).
+3. Programmable SPI clock frequency range
+4. Programmable character length (multiples of 8 bits)
+5. Programmable clock phase (delay or no delay)
+6. Programmable clock polarity (high or low)
+7. Supports Single Master, Multiple Slaves configuration.
+8. Supports Simple SPI mode
+9. Configurable shift directions (LSB first or MSB first)
+10. Delay of chip select low to posedge of sclk, last edge of sclk to raising edge of cs and chip select assert to deassert.
+11. Continuous and discontinuous transfer
+
+# Architecture Diagram  
+![spi_avip_tb_architecture](https://user-images.githubusercontent.com/104111334/180639035-878c48a6-59c4-4ee7-b36b-1748be12b93a.png)
 
 # Developers, Welcome
 We believe in growing together and if you'd like to contribute, please do check out the contributing guide below:  
 -- link --
-
 
 # Installation - Get the VIP collateral from the GitHub repository
 
@@ -82,16 +96,14 @@ ex: make regression testlist_name=spi_simple_fd_regression.list
 imc -load cov_work/scope/test/ &
 ```
 
-## Architecture Diagram  
-![Fig 2 1 spi_avip_tb_architecture drawio](https://user-images.githubusercontent.com/104111334/165571701-3ed92657-d80c-44d9-8e5a-e622436ba047)
-
 ## Technical Document 
-https://docs.google.com/document/d/e/2PACX-1vS4DnKb5akCCC_zODun8u6wgevKRXrBYgc44t6a4oQnUtdy2bDF_CfOGEXV9rsc6gddOoZ2uJYJHnrI/pub
+https://github.com/mbits-mirafra/spi_avip/blob/main/doc/spi_avip_architectural_document.pdf    
 
 ## User Guide  
-https://docs.google.com/document/d/e/2PACX-1vTGXJSuW7pp7cO2nlFyMgjifRK2dPp5kX11YQ_JrvLsQZLpZvcdBv6Oy6OQ7WH_vvCJ3RXf-XzD4rTE/pub
+https://github.com/mbits-mirafra/spi_avip/blob/main/doc/spi_avip_user_guide.pdf  
 
 ## Contact Mirafra Team  
-muneebullashariff@mirafra.com  
 alokk@mirafra.com  
 vishwanath@mirafra.com  
+muneebullashariff@mirafra.com  
+
