@@ -103,7 +103,7 @@ https://github.com/mbits-mirafra/spi_avip/blob/main/doc/spi_avip_architectural_d
 https://github.com/mbits-mirafra/spi_avip/blob/main/doc/spi_avip_user_guide.pdf  
 
 ## Contact Mirafra Team  
-alokk@mirafra.com  
-vishwanath@mirafra.com  
-muneebullashariff@mirafra.com  
+You can reach out to us over mbits@mirafra.com
 
+For more inofrmation regarding Mirafra Technologies please do checkout our officail website:  
+https://mirafra.com/
