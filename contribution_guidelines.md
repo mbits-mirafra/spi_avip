@@ -1,5 +1,5 @@
 1. Use the coding guildelines for code development:  
-https://github.com/mbits-mirafra/spi_avip/blob/main/coding_guidelines.sv 
+https://github.com/mbits-mirafra/spi_avip/blob/main/coding_guidelines.md
 
 2. Use a separate Git branch to work for every feature or debug. You can refer the below article on how to work with Git branches  
 https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/  
