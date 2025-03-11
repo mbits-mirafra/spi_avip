@@ -1,34 +1,34 @@
-`ifndef SPI_FD_VIRTUAL_SEQ_BASE_INCLUDED_
-`define SPI_FD_VIRTUAL_SEQ_BASE_INCLUDED_
+`ifndef SPIVIRTUALBASEFDSEQ_INCLUDED_
+`define SPIVIRTUALBASEFDSEQ_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 //Class:SPI Virtual sequence
 // Description:
 // This class contains the handle of actual sequencer pointing towards them
 //--------------------------------------------------------------------------------------------
-class spi_fd_virtual_seq_base extends uvm_sequence#(uvm_sequence_item);
-  `uvm_object_utils(spi_fd_virtual_seq_base)
+class SpiVirtualBaseFdSeq extends uvm_sequence#(uvm_sequence_item);
+  `uvm_object_utils(SpiVirtualBaseFdSeq)
 
    //p sequencer macro declaration 
-   `uvm_declare_p_sequencer(virtual_sequencer)
+   `uvm_declare_p_sequencer(SpiVirtualSequencer)
   
    //declaring virtual sequencer handle
-   //virtual_sequencer  virtual_seqr_h;
+   //SpiVirtualSequencer  virtual_seqr_h;
 
   //--------------------------------------------------------------------------------------------
   // declaring handles for master and slave sequencer and environment config
   //--------------------------------------------------------------------------------------------
-  master_sequencer  master_seqr_h;
-  slave_sequencer   slave_seqr_h;
-  env_config env_cfg_h;
+  SpiMasterSequencer   spiSlaveSequencer;
+  SpiSlaveSequencer   spiSlaveSequencer;
+  SpiEnvConfig spiEnvConfig;
 
   //--------------------------------------------------------------------------------------------
   // Externally defined tasks and functions
   //--------------------------------------------------------------------------------------------
-  extern function new(string name="spi_fd_virtual_seq_base");
+  extern function new(string name="SpiVirtualBaseFdSeq");
   extern task body();
 
-endclass:spi_fd_virtual_seq_base
+endclass:SpiVirtualBaseFdSeq
 
 //--------------------------------------------------------------------------------------------
 //Constructor:new
@@ -37,7 +37,7 @@ endclass:spi_fd_virtual_seq_base
 //name - Instance name of the virtual_sequence
 //parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_fd_virtual_seq_base::new(string name="spi_fd_virtual_seq_base");
+function SpiVirtualBaseFdSeq::new(string name="SpiVirtualBaseFdSeq");
   super.new(name);
 endfunction:new
 
@@ -48,8 +48,8 @@ endfunction:new
 //Parameters:
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
-task spi_fd_virtual_seq_base::body();
-  if(!uvm_config_db#(env_config) ::get(null,get_full_name(),"env_config",env_cfg_h)) begin
+task SpiVirtualBaseFdSeq::body();
+  if(!uvm_config_db#(SpiEnvConfig) ::get(null,get_full_name(),"SpiEnvConfig",spiEnvConfig)) begin
     `uvm_fatal("CONFIG","cannot get() env_cfg from uvm_config_db.Have you set() it?")
   end
 
@@ -65,8 +65,8 @@ task spi_fd_virtual_seq_base::body();
             
   //connecting master sequencer and slave sequencer present in p_sequencer to
   // local master sequencer and slave sequencer 
-  master_seqr_h=p_sequencer.master_seqr_h;
-  slave_seqr_h=p_sequencer.slave_seqr_h;
+  spiMasterSequencer=p_sequencer.spiMasterSequencer;
+  spiSlaveSequencer=p_sequencer.spiSlaveSequencer;
 
 endtask:body
 

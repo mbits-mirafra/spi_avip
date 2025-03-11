@@ -1,24 +1,24 @@
-`ifndef SPI_QUAD_SPI_TYPE_VIRTUAL_SEQ_INCLUDED_
-`define SPI_QUAD_SPI_TYPE_VIRTUAL_SEQ_INCLUDED_
+`ifndef SPIVIRTUALFDNEGATIVESCENARIOSSEQ_INCLUDED_
+`define SPIVIRTUALFDNEGATIVESCENARIOSSEQ_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Extended class from spi virtual sequence
 //--------------------------------------------------------------------------------------------
-class spi_quad_spi_type_virtual_seq extends spi_fd_virtual_seq_base;
+class SpiVirtualFdNegativeScenariosSeq extends SpiVirtualBaseFdSeq;
   
-  `uvm_object_utils(spi_quad_spi_type_virtual_seq)
+  `uvm_object_utils(SpiVirtualFdNegativeScenariosSeq)
 
   //declare extended class handles of master and slave sequence
-  spi_quad_spi_type_master_seq spi_quad_spi_type_master_seq_h;
-  spi_quad_spi_type_slave_seq spi_quad_spi_type_slave_seq_h;
+  SpiMasterFdNegativeScenariosSeq spiMasterFdNegativeScenariosSeq;
+  SpiSlaveFdNegativeScenariosSeq spiSlaveFdNegativeScenariosSeq;
 
   //--------------------------------------------------------------------------------------------
   // Externally defined tasks and functions
   //--------------------------------------------------------------------------------------------
-  extern function new(string name="spi_quad_spi_type_virtual_seq");
+  extern function new(string name="SpiVirtualFdNegativeScenariosSeq");
   extern task body();
 
-endclass : spi_quad_spi_type_virtual_seq
+endclass : SpiVirtualFdNegativeScenariosSeq
 
 //--------------------------------------------------------------------------------------------
 //Constructor:new
@@ -27,7 +27,7 @@ endclass : spi_quad_spi_type_virtual_seq
 //name - Instance name of the virtual_sequence
 //parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_quad_spi_type_virtual_seq::new(string name="spi_quad_spi_type_virtual_seq");
+function SpiVirtualFdNegativeScenariosSeq::new(string name="SpiVirtualFdNegativeScenariosSeq");
   super.new(name);
 endfunction: new
 
@@ -38,12 +38,12 @@ endfunction: new
 //Parameters:
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
-task spi_quad_spi_type_virtual_seq::body();
+task SpiVirtualFdNegativeScenariosSeq::body();
  super.body(); //Sets up the sub-sequencer pointer
  
  //crearions master and slave sequence handles here  
- spi_quad_spi_type_master_seq_h=spi_quad_spi_type_master_seq::type_id::create("spi_quad_spi_type_master_seq_h");
- spi_quad_spi_type_slave_seq_h=spi_quad_spi_type_slave_seq::type_id::create("spi_quad_spi_type_slave_seq_h");
+ spiMasterFdNegativeScenariosSeq=SpiMasterFdNegativeScenariosSeq::type_id::create("spiMasterFdNegativeScenariosSeq");
+ spiSlaveFdNegativeScenariosSeq=SpiSlaveFdNegativeScenariosSeq::type_id::create("spiSlaveFdNegativeScenariosSeq");
 
     //configuring no of masters and starting master sequencers
 
@@ -57,13 +57,13 @@ task spi_quad_spi_type_virtual_seq::body();
       // MSHA:   //no_of_sagent should be declared in env_config file
       // MSHA: for(int i=0; i<e_cfg_h.no_of_sagent; i++)begin
       // MSHA:   //starting slave sequencer
-      // MSHA:  spi_quad_spi_type_slave_seq_h.start(s_seqr_h);
+      // MSHA:  spiSlaveFdNegativeScenariosSeq.start(s_seqr_h);
       // MSHA:  end
       // MSHA: end
 
       //starting slave sequencer
       forever begin: SLAVE_SEQ_START
-        spi_quad_spi_type_slave_seq_h.start(p_sequencer.slave_seqr_h);
+        spiSlaveFdNegativeScenariosSeq.start(p_sequencer.spiSlaveSequencer);
       end
     join_none
     //has_m_agt should be declared in env_config file
@@ -73,13 +73,13 @@ task spi_quad_spi_type_virtual_seq::body();
     // MSHA: //no_of_magent should be declared in env_config file
     // MSHA: for(int i=0; i<e_cfg_h.no_of_magent; i++)begin
     // MSHA:   //starting master sequencer
-    // MSHA:   spi_quad_spi_type_master_seq_h.start(m_seqr_h);
+    // MSHA:   spiMasterFdNegativeScenariosSeq.start(m_seqr_h);
     // MSHA:   end
     // MSHA: end
 
     //starting master sequencer
     repeat(5)begin: MASTER_SEQ_START
-      spi_quad_spi_type_master_seq_h.start(p_sequencer.master_seqr_h);
+      spiMasterFdNegativeScenariosSeq.start(p_sequencer.spiMasterSequencer);
     end
 
 endtask: body

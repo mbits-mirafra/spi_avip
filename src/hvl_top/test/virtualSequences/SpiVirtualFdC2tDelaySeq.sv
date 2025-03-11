@@ -1,24 +1,24 @@
-`ifndef SPI_FD_16B_VIRTUAL_SEQ_INCLUDED_
-`define SPI_FD_16B_VIRTUAL_SEQ_INCLUDED_
+`ifndef SPIVIRTUALFDC2TDELAYSEQ_INCLUDED_
+`define SPIVIRTUALFDC2TDELAYSEQ_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Extended class from spi virtual sequence
 //--------------------------------------------------------------------------------------------
-class spi_fd_16b_virtual_seq extends spi_fd_virtual_seq_base;
+class SpiVirtualFdC2tDelaySeq extends SpiVirtualBaseFdSeq;
   
-  `uvm_object_utils(spi_fd_16b_virtual_seq)
+  `uvm_object_utils(SpiVirtualFdC2tDelaySeq)
 
   //declare extended class handles of master and slave sequence
-  spi_fd_16b_master_seq spi_fd_16b_master_seq_h;
-  spi_fd_16b_slave_seq spi_fd_16b_slave_seq_h;
+  SpiMasterFdC2tDelaySeq spiMasterFdC2tDelaySeq;
+  SpiSlaveFdC2tDelaySeq spiSlaveFdC2tDelaySeq;
 
   //--------------------------------------------------------------------------------------------
   // Externally defined tasks and functions
   //--------------------------------------------------------------------------------------------
-  extern function new(string name="spi_fd_16b_virtual_seq");
+  extern function new(string name="SpiVirtualFdC2tDelaySeq");
   extern task body();
 
-endclass : spi_fd_16b_virtual_seq
+endclass : SpiVirtualFdC2tDelaySeq
 
 //--------------------------------------------------------------------------------------------
 //Constructor:new
@@ -27,7 +27,7 @@ endclass : spi_fd_16b_virtual_seq
 //name - Instance name of the virtual_sequence
 //parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_fd_16b_virtual_seq::new(string name="spi_fd_16b_virtual_seq");
+function SpiVirtualFdC2tDelaySeq::new(string name="SpiVirtualFdC2tDelaySeq");
   super.new(name);
 endfunction: new
 
@@ -38,14 +38,14 @@ endfunction: new
 //Parameters:
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
-task spi_fd_16b_virtual_seq::body();
+task SpiVirtualFdC2tDelaySeq::body();
  super.body(); //Sets up the sub-sequencer pointer
 
    //crearions master and slave sequence handles here  
-   spi_fd_16b_master_seq_h=spi_fd_16b_master_seq::type_id::create("spi_fd_16b_master_seq_h");
-   spi_fd_16b_slave_seq_h=spi_fd_16b_slave_seq::type_id::create("spi_fd_16b_slave_seq_h");
-
-   //configuring no of masters and starting master sequencers
+    spiMasterFdC2tDelaySeq=SpiMasterFdC2tDelaySeq::type_id::create("spiMasterFdC2tDelaySeq");
+    spiSlaveFdC2tDelaySeq=SpiSlaveFdC2tDelaySeq::type_id::create("spiSlaveFdC2tDelaySeq");
+    
+    //configuring no of masters and starting master sequencers
 
   fork
       // TODO(mshariff): We need to connect the slaves with caution
@@ -57,13 +57,13 @@ task spi_fd_16b_virtual_seq::body();
       // MSHA:   //no_of_sagent should be declared in env_config file
       // MSHA: for(int i=0; i<e_cfg_h.no_of_sagent; i++)begin
       // MSHA:   //starting slave sequencer
-      // MSHA:  spi_fd_16b_slave_seq_h.start(s_seqr_h);
+      // MSHA:  spiSlaveFdC2tDelaySeq.start(s_seqr_h);
       // MSHA:  end
       // MSHA: end
 
       //starting slave sequencer
       forever begin : SLAVE_SEQ_START
-        spi_fd_16b_slave_seq_h.start(p_sequencer.slave_seqr_h);
+        spiSlaveFdC2tDelaySeq.start(p_sequencer.spiSlaveSequencer);
       end
   join_none
     //has_m_agt should be declared in env_config file
@@ -73,13 +73,13 @@ task spi_fd_16b_virtual_seq::body();
     // MSHA: //no_of_magent should be declared in env_config file
     // MSHA: for(int i=0; i<e_cfg_h.no_of_magent; i++)begin
     // MSHA:   //starting master sequencer
-    // MSHA:   spi_fd_16b_master_seq_h.start(m_seqr_h);
+    // MSHA:   spiMasterFdC2tDelaySeq.start(m_seqr_h);
     // MSHA:   end
     // MSHA: end
 
     //starting master sequencer
     repeat(5)begin: MASTER_SEQ_START
-      spi_fd_16b_master_seq_h.start(p_sequencer.master_seqr_h);
+      spiMasterFdC2tDelaySeq.start(p_sequencer.spiMasterSequencer);
     end
 
 endtask: body
