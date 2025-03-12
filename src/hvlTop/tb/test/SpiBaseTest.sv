@@ -107,6 +107,7 @@ endfunction : build_phase
   spiEnvConfig.spiMasterAgentConfig.t2cdelay            = 1;
   spiEnvConfig.spiMasterAgentConfig.hasCoverage         = 1;
   spiEnvConfig.spiMasterAgentConfig.wdelay              = 1;
+  spiEnvConfig.spiMasterAgentConfig.spiType             = spiTypeEnum'(SIMPLE_SPI);
 
   // baudrate_divisor_divisor = (secondaryPrescalar+1) * (2 ** (primaryPrescalar+1))
   // baudrate = busclock / baudrate_divisor_divisor;
@@ -128,6 +129,7 @@ endfunction: setupSpiMasterAgentConfig
     spiEnvConfig.spiSlaveAgentConfig[i].spiMode         = operationModesEnum'(CPOL0_CPHA0);
     spiEnvConfig.spiSlaveAgentConfig[i].shiftDirection  = shiftDirectionEnum'(LSB_FIRST);
     spiEnvConfig.spiSlaveAgentConfig[i].hasCoverage     = 1;
+    spiEnvConfig.spiSlaveAgentConfig[i].spiType         = spiTypeEnum'(SIMPLE_SPI);
 
   end
 

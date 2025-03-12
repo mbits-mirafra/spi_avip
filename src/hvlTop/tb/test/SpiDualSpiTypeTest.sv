@@ -43,6 +43,7 @@ endfunction : setupSpiMasterAgentConfig
 
 
 function void SpiDualSpiTypeTest::setupSpiSlaveAgentConfig();
+  super.setupSpiSlaveAgentConfig();
   foreach(spiEnvConfig.spiSlaveAgentConfig[i])begin
     spiEnvConfig.spiSlaveAgentConfig[i].spiType = spiTypeEnum'(DUAL_SPI);
   end

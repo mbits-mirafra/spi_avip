@@ -43,6 +43,7 @@ endfunction : setupSpiMasterAgentConfig
 
 
 function void SpiQuadSpiTypeTest::setupSpiSlaveAgentConfig();
+  super.setupSpiSlaveAgentConfig();
   foreach(spiEnvConfig.spiSlaveAgentConfig[i])begin
     spiEnvConfig.spiSlaveAgentConfig[i].spiType = spiTypeEnum'(QUAD_SPI);
   end
