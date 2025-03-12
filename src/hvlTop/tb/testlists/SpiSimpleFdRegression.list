@@ -7,11 +7,9 @@ SpiSimpleFd24BitsTest
 SpiSimpleFd32BitsTest
 SpiSimpleFd64BitsTest
 SpiSimpleFdMaximumBitsTest
-SpiQuadSpiTypeTest
-SpiDualSpiTypeTest
 SpiSimpleFdMsbTest
 SpiSimpleFdLsbTest
-SpiSimpleFdNegativeScenariosTe
+SpiSimpleFdNegativeScenariosTest
 SpiSimpleFd8BitsCtTest
 SpiSimpleFdNoOfSlavesTest
 SpiSimpleFdBaudrateTest
@@ -24,3 +22,5 @@ SpiSimpleFdCrossTest
 SpiSimpleFdDctTest
 SpiSimpleFdRandTest
 SpiSimpleFdT2cDelayTest
+SpiQuadSpiTypeTest
+SpiDualSpiTypeTest
