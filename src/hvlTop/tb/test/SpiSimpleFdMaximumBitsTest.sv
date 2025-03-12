@@ -1,45 +1,45 @@
-`ifndef SPI_SIMPLE_FD_64B_TEST_INCLUDED_
-`define SPI_SIMPLE_FD_64B_TEST_INCLUDED_
+`ifndef SPISIMPLEFDMAXIMUMBITSTEST_INCLUDED_
+`define SPISIMPLEFDMAXIMUMBITSTEST_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: spi_simple_fd_64b_test
+// Class: SpiSimpleFdMaximumBitsTest
 // Description:
-// Extended the spi_simple_fd_64b_test class from base_test class
+// Extended the SpiSimpleFdMaximumBitsTest class from SpiBaseTest class
 //--------------------------------------------------------------------------------------------
-class spi_simple_fd_64b_test extends base_test;
+class SpiSimpleFdMaximumBitsTest extends SpiBaseTest;
 
-  //Registering the spi_simple_fd_64b_test in the factory
-  `uvm_component_utils(spi_simple_fd_64b_test)
+  //Registering the SpiSimpleFdMaximumBitsTest in the factory
+  `uvm_component_utils(SpiSimpleFdMaximumBitsTest)
 
   //-------------------------------------------------------
   // Declaring sequence handles  
   //-------------------------------------------------------
-  spi_fd_64b_virtual_seq spi_fd_64b_virtual_seq_h;
+  SpiVirtualFdMaximumBitsSeq spiVirtualFdMaximumBitsSeq;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "spi_simple_fd_64b_test", uvm_component parent);
+  extern function new(string name = "SpiSimpleFdMaximumBitsTest", uvm_component parent);
   extern function void build_phase(uvm_phase phase);
   extern task run_phase(uvm_phase phase);
 
-endclass : spi_simple_fd_64b_test
+endclass : SpiSimpleFdMaximumBitsTest
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initializes class object
 // Parameters:
-// name - spi_simple_fd_64b_test
+// name - SpiSimpleFdMaximumBitsTest
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_simple_fd_64b_test::new(string name = "spi_simple_fd_64b_test",uvm_component parent);
+function SpiSimpleFdMaximumBitsTest::new(string name = "SpiSimpleFdMaximumBitsTest",uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function:build_phase
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_64b_test::build_phase(uvm_phase phase);
+function void SpiSimpleFdMaximumBitsTest::build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction : build_phase
 
@@ -47,12 +47,12 @@ endfunction : build_phase
 // Task:run_phase
 // Responsible for starting the transactions
 //--------------------------------------------------------------------------------------------
-task spi_simple_fd_64b_test::run_phase(uvm_phase phase);
+task SpiSimpleFdMaximumBitsTest::run_phase(uvm_phase phase);
   
-  spi_fd_64b_virtual_seq_h = spi_fd_64b_virtual_seq::type_id::create("spi_fd_64b_virtual_seq_h");
+  spiVirtualFdMaximumBitsSeq = SpiVirtualFdMaximumBitsSeq::type_id::create("spiVirtualFdMaximumBitsSeq");
 
   phase.raise_objection(this);
-  spi_fd_64b_virtual_seq_h.start(env_h.virtual_seqr_h); 
+  spiVirtualFdMaximumBitsSeq.start(spiEnv.spiVirtualSequencer);
   phase.drop_objection(this);
 
 endtask:run_phase

@@ -1,45 +1,46 @@
-`ifndef SPI_SIMPLE_FD_16B_TEST_INCLUDED_
-`define SPI_SIMPLE_FD_16B_TEST_INCLUDED_
+`ifndef SPISIMPLEFD8BITSCTTEST_INCLUDED_
+`define SPISIMPLEFD8BITSCTTEST_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: spi_simple_fd_16b_test
+// Class: SpiSimpleFd8BitsCtTest
 // Description:
-// Extended the spi_simple_fd_16b_test class from base_test class
+// Extended the SpiSimpleFd8BitsCtTest class from SpiBaseTest class
 //--------------------------------------------------------------------------------------------
-class spi_simple_fd_16b_test extends base_test;
+class SpiSimpleFd8BitsCtTest extends SpiBaseTest;
 
-  //Registering the spi_simple_fd_16b_test in the factory
-  `uvm_component_utils(spi_simple_fd_16b_test)
+  //Registering the SpiSimpleFd8BitsCtTest in the factory
+  `uvm_component_utils(SpiSimpleFd8BitsCtTest)
 
   //-------------------------------------------------------
   // Declaring sequence handles  
   //-------------------------------------------------------
-  spi_fd_16b_virtual_seq spi_fd_16b_virtual_seq_h;
+  SpiVirtualFd8BitsCtSeq spiVirtualFd8BitsCtSeq;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "spi_simple_fd_16b_test", uvm_component parent);
+  extern function new(string name = "SpiSimpleFd8BitsCtTest", uvm_component parent);
   extern function void build_phase(uvm_phase phase);
   extern task run_phase(uvm_phase phase);
 
-endclass : spi_simple_fd_16b_test
+endclass : SpiSimpleFd8BitsCtTest
+
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initializes class object
 // Parameters:
-// name - spi_simple_fd_16b_test
+// name - SpiSimpleFd8BitsCtTest
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_simple_fd_16b_test::new(string name = "spi_simple_fd_16b_test",uvm_component parent);
+function SpiSimpleFd8BitsCtTest::new(string name = "SpiSimpleFd8BitsCtTest",uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function:build_phase
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_16b_test::build_phase(uvm_phase phase);
+function void SpiSimpleFd8BitsCtTest::build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction : build_phase
 
@@ -47,12 +48,12 @@ endfunction : build_phase
 // Task:run_phase
 // Responsible for starting the transactions
 //--------------------------------------------------------------------------------------------
-task spi_simple_fd_16b_test::run_phase(uvm_phase phase);
+task SpiSimpleFd8BitsCtTest::run_phase(uvm_phase phase);
   
-  spi_fd_16b_virtual_seq_h = spi_fd_16b_virtual_seq::type_id::create("spi_fd_16b_virtual_seq_h");
+  spiVirtualFd8BitsCtSeq = SpiVirtualFd8BitsCtSeq::type_id::create("spiVirtualFd8BitsCtSeq");
 
   phase.raise_objection(this);
-  spi_fd_16b_virtual_seq_h.start(env_h.virtual_seqr_h); 
+  spiVirtualFd8BitsCtSeq.start(spiEnv.spiVirtualSequencer); //added by the team 3
   phase.drop_objection(this);
 
 endtask:run_phase
