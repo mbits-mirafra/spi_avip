@@ -45,24 +45,24 @@ make compile
 # Simulation:
 make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL>
 
-ex: make simulate test=spi_simple_fd_8b_test uvm_verbosity=UVM_HIGH
+ex: make simulate test=SpiSimpleFd8BitsTest uvm_verbosity=UVM_HIGH
 
 # Note: You can find all the test case names in the path given below   
-spi_avip/src/hvl_top/testlists/spi_simple_fd_regression.list
+spi_avip/src/hvlTop/tb/testlists/SpiSimpleFdRegression.list
 
 # Wavefrom:  
 vsim -view <test_name>/waveform.wlf &
 
-ex: vsim -view spi_simple_fd_8b_test/waveform.wlf &
+ex: vsim -view SpiSimpleFd8BitsTest/waveform.wlf &
 
 # Regression:
 make regression testlist_name=<regression_testlist_name.list>
-ex: make regression testlist_name=spi_simple_fd_regression.list
+ex: make regression testlist_name=SpiSimpleFdRegression.list
 
 # Coverage: 
  ## Individual test:
  firefox <test_name>/html_cov_report/index.html &
- ex: firefox spi_simple_fd_8b_test/html_cov_report/index.html &
+ ex: firefox SpiSimpleFd8BitsTest/html_cov_report/index.html &
 
  ## Regression:
  firefox merged_cov_html_report/index.html &
@@ -80,17 +80,17 @@ make compile
 # Simulation:
 make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL>
 
-ex: make simulate test=spi_simple_fd_8b_test uvm_verbosity=UVM_HIGH
+ex: make simulate test=SpiSimpleFd8BitsTest uvm_verbosity=UVM_HIGH
 
 # Note: You can find all the test case names in the path given below   
-spi_avip/src/hvl_top/testlists/spi_simple_fd_regression.list
+spi_avip/src/hvlTop/tb/testlists/SpiSimpleFdRegression.list
 
 # Wavefrom:  
 simvision waves.shm/ &
 
 # Regression:
 make regression testlist_name=<regression_testlist_name.list>
-ex: make regression testlist_name=spi_simple_fd_regression.list
+ex: make regression testlist_name=SpiSimpleFdRegression.list
 
 # Coverage:   
 imc -load cov_work/scope/test/ &
