@@ -23,10 +23,11 @@ package SpiTestPkg;
   import SpiEnvPkg::*;
   import SpiMasterSeqPkg::*;
   import SpiSlaveSeqPkg::*;
-//  import SpiVirtualSeqPkg::*;
+  import SpiVirtualSeqPkg::*;
 
  //including base_test for testing
  `include "SpiBaseTest.sv"
+ `include "SpiSimpleFd8BitsTest.sv"
  `include "SpiSimpleFd16BitsTest.sv"
  `include "SpiSimpleFd24BitsTest.sv"
  `include "SpiSimpleFd32BitsTest.sv"
@@ -39,7 +40,6 @@ package SpiTestPkg;
  `include "SpiSimpleFdNegativeScenariosTest.sv"
  `include "SpiSimpleFd8BitsCtTest.sv"
  `include "SpiSimpleFdNoOfSlavesTest.sv"
- `include "SpiSimpleFd8BitsTest.sv"
  `include "SpiSimpleFdBaudrateTest.sv"
  `include "SpiSimpleFdC2tDelayTest.sv"
  `include "SpiSimpleFdCpol0Cpha0Test.sv"

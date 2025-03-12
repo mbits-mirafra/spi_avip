@@ -14,7 +14,7 @@ class SpiSimpleFdDctTest extends SpiBaseTest;
   //-------------------------------------------------------
   // Declaring sequence handles  
   //-------------------------------------------------------
-  SpiVirtualFd8BitsSeq SpiVirtualFd8BitsSeq;
+  SpiVirtualFd8BitsSeq spiVirtualFd8BitsSeq;
   SpiVirtualFd16BitsSeq spiVirtualFd16BitsSeq;
   SpiVirtualFd32BitsSeq spiVirtualFd32BitsSeq;
 
@@ -61,12 +61,12 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 task SpiSimpleFdDctTest::run_phase(uvm_phase phase);
   
-  SpiVirtualFd8BitsSeq = SpiVirtualFd8BitsSeq::type_id::create("SpiVirtualFd8BitsSeq");
+  spiVirtualFd8BitsSeq = SpiVirtualFd8BitsSeq::type_id::create("spiVirtualFd8BitsSeq");
   spiVirtualFd16BitsSeq = SpiVirtualFd16BitsSeq::type_id::create("spiVirtualFd16BitsSeq");
   spiVirtualFd32BitsSeq = SpiVirtualFd32BitsSeq::type_id::create("spiVirtualFd32BitsSeq");
 
   phase.raise_objection(this);
-  SpiVirtualFd8BitsSeq.start(spiEnv.spiVirtualSequencer); 
+  spiVirtualFd8BitsSeq.start(spiEnv.spiVirtualSequencer); 
   spiVirtualFd16BitsSeq.start(spiEnv.spiVirtualSequencer); 
   spiVirtualFd32BitsSeq.start(spiEnv.spiVirtualSequencer); 
   phase.drop_objection(this);

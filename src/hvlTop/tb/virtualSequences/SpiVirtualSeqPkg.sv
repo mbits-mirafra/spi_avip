@@ -29,6 +29,7 @@ package SpiVirtualSeqPkg;
   `include "SpiVirtualFdNegativeScenariosSeq.sv"
   `include "SpiVirtualFd32BitsSeq.sv"
   `include "SpiVirtualFd64BitsSeq.sv"
+  `include "SpiVirtualFd8BitsCtSeq.sv"
   `include "SpiVirtualFdC2tDelaySeq.sv"
   `include "SpiVirtualFdDctSeq.sv"
   `include "SpiVirtualFdCrossSeq.sv"
