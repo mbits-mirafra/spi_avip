@@ -1,46 +1,43 @@
-`ifndef SPI_SIMPLE_FD_C2T_DELAY_TEST_INCLUDED_
-`define SPI_SIMPLE_FD_C2T_DELAY_TEST_INCLUDED_
+`ifndef SPISIMPLEFDT2CDELAYTEST_INCLUDED_
+`define SPISIMPLEFDT2CDELAYTEST_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: spi_simple_fd_c2t_delay_test
+// Class: SpiSimpleFdT2cDelayTest
 // Description:
-// Extended the spi_simple_fd_c2t_delay_test class from spi_simple_fd_8b_test class
+// Extended the SpiSimpleFdT2cDelayTest class from SpiSimpleFd8BitsTest class
 //--------------------------------------------------------------------------------------------
-class spi_simple_fd_c2t_delay_test extends spi_simple_fd_8b_test;
+class SpiSimpleFdT2cDelayTest extends SpiSimpleFd8BitsTest;
 
-  //Registering the spi_simple_fd_c2t_delay_test in the factory
-  `uvm_component_utils(spi_simple_fd_c2t_delay_test)
-
+  //Registering the SpiSimpleFdT2cDelayTest in the factory
+  `uvm_component_utils(SpiSimpleFdT2cDelayTest)
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "spi_simple_fd_c2t_delay_test", uvm_component parent);
-  extern virtual function void setup_master_agent_cfg();
+  extern function new(string name = "SpiSimpleFdT2cDelayTest", uvm_component parent);
+  extern virtual function void setupSpiMasterAgentConfig();
 
-endclass : spi_simple_fd_c2t_delay_test
+endclass : SpiSimpleFdT2cDelayTest
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initializes class object
 // Parameters:
-// name - spi_simple_fd_c2t_delay_test
+// name - SpiSimpleFdT2cDelayTest
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_simple_fd_c2t_delay_test::new(string name = "spi_simple_fd_c2t_delay_test",uvm_component parent);
+function SpiSimpleFdT2cDelayTest::new(string name = "SpiSimpleFdT2cDelayTest",uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Function: setup_master_agent_cfg
+// Function: setupSpiMasterAgentConfig
 // Setup the master agent configuration with the required values
 // and store the handle into the config_db
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_c2t_delay_test::setup_master_agent_cfg();
-  super.setup_master_agent_cfg();
-  env_cfg_h.master_agent_cfg_h.c2tdelay = 2;
-endfunction : setup_master_agent_cfg
-
-
+function void SpiSimpleFdT2cDelayTest::setupSpiMasterAgentConfig();
+  super.setupSpiMasterAgentConfig();
+  spiEnvConfig.spiMasterAgentConfig.t2cdelay = 2;
+endfunction : setupSpiMasterAgentConfig
 
 `endif

@@ -1,45 +1,45 @@
-`ifndef SPI_SIMPLE_FD_CPOL0_CPHA1_TEST_INCLUDED_
-`define SPI_SIMPLE_FD_CPOL0_CPHA1_TEST_INCLUDED_
+`ifndef SPISIMPLEFDCPOL0CPHA1TEST_INCLUDED_
+`define SPISIMPLEFDCPOL0CPHA1TEST_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: spi_simple_fd_cpol0_cpha1_test
+// Class: SpiSimpleFdCpol0Cpha1Test
 // Description:
-// Extended the spi_simple_fd_cpol0_cpha1_test class from spi_simple_fd_8b_test class
+// Extended the SpiSimpleFdCpol0Cpha1Test class from SpiSimpleFd8BitsTest class
 //--------------------------------------------------------------------------------------------
-class spi_simple_fd_cpol0_cpha1_test extends spi_simple_fd_8b_test;
+class SpiSimpleFdCpol0Cpha1Test extends SpiSimpleFd8BitsTest;
 
-  //Registering the spi_simple_fd_cpol0_cpha1_test in the factory
-  `uvm_component_utils(spi_simple_fd_cpol0_cpha1_test)
+  //Registering the SpiSimpleFdCpol0Cpha1Test in the factory
+  `uvm_component_utils(SpiSimpleFdCpol0Cpha1Test)
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "spi_simple_fd_cpol0_cpha1_test", uvm_component parent);
-  extern virtual function void setup_master_agent_cfg();
-  extern virtual function void setup_slave_agents_cfg();
+  extern function new(string name = "SpiSimpleFdCpol0Cpha1Test", uvm_component parent);
+  extern virtual function void setupSpiMasterAgentConfig();
+  extern virtual function void setupSpiSlaveAgentConfig();
 
-endclass : spi_simple_fd_cpol0_cpha1_test
+endclass : SpiSimpleFdCpol0Cpha1Test
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initializes class object
 // Parameters:
-// name - spi_simple_fd_cpol0_cpha1_test
+// name - SpiSimpleFdCpol0Cpha1Test
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_simple_fd_cpol0_cpha1_test::new(string name = "spi_simple_fd_cpol0_cpha1_test",uvm_component parent);
+function SpiSimpleFdCpol0Cpha1Test::new(string name = "SpiSimpleFdCpol0Cpha1Test",uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Function:setup_master_agent_cfg
+// Function:setupSpiMasterAgentConfig
 // setup the master agent configurations with required values
 // and store the handle into configdb
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_cpol0_cpha1_test::setup_master_agent_cfg();
-  super.setup_master_agent_cfg();
-  env_cfg_h.master_agent_cfg_h.spi_mode = operation_modes_e'(CPOL0_CPHA1);
-endfunction : setup_master_agent_cfg
+function void SpiSimpleFdCpol0Cpha1Test::setupSpiMasterAgentConfig();
+  super.setupSpiMasterAgentConfig();
+  spiEnvConfig.spiMasterAgentConfig.spiMode = operationModesEnum'(CPOL0_CPHA1);
+endfunction : setupSpiMasterAgentConfig
 
 
 //--------------------------------------------------------------------------------------------
@@ -47,12 +47,12 @@ endfunction : setup_master_agent_cfg
 // setup the slave agent configurations with required values
 // and store the handle into configdb
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_cpol0_cpha1_test::setup_slave_agents_cfg();
-  super.setup_slave_agents_cfg();
-  foreach(env_cfg_h.slave_agent_cfg_h[i])begin
-    env_cfg_h.slave_agent_cfg_h[i].spi_mode = operation_modes_e'(CPOL0_CPHA1);
+function void SpiSimpleFdCpol0Cpha1Test::setupSpiSlaveAgentConfig();
+  super.setupSpiSlaveAgentConfig();
+  foreach(spiEnvConfig.spiSlaveAgentConfig[i])begin
+    spiEnvConfig.spiSlaveAgentConfig[i].spiMode = operationModesEnum'(CPOL0_CPHA1);
   end
-endfunction: setup_slave_agents_cfg
+endfunction: setupSpiSlaveAgentConfig
 
 
 `endif

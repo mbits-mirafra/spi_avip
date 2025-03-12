@@ -1,44 +1,44 @@
-`ifndef SPI_SIMPLE_FD_BAUDRATE_TEST_INCLUDED_
-`define SPI_SIMPLE_FD_BAUDRATE_TEST_INCLUDED_
+`ifndef SPISIMPLEFDBAUDRATETEST_INCLUDED_
+`define SPISIMPLEFDBAUDRATETEST_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: spi_simple_fd_baudrate_test
+// Class: SpiSimpleFdBaudrateTest
 // Description:
-// Extended the spi_simple_fd_baudrate_test class from spi_simple_fd_8b_test class
+// Extended the SpiSimpleFdBaudrateTest class from SpiSimpleFd8BitsTest class
 //--------------------------------------------------------------------------------------------
-class spi_simple_fd_baudrate_test extends spi_simple_fd_8b_test;
+class SpiSimpleFdBaudrateTest extends SpiSimpleFd8BitsTest;
 
-  //Registering the spi_simple_fd_baudrate_test in the factory
-  `uvm_component_utils(spi_simple_fd_baudrate_test)
+  //Registering the SpiSimpleFdBaudrateTest in the factory
+  `uvm_component_utils(SpiSimpleFdBaudrateTest)
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "spi_simple_fd_baudrate_test", uvm_component parent);
-  extern virtual function void setup_master_agent_cfg();
+  extern function new(string name = "SpiSimpleFdBaudrateTest", uvm_component parent);
+  extern virtual function void setupSpiMasterAgentConfig();
 
-endclass : spi_simple_fd_baudrate_test
+endclass : SpiSimpleFdBaudrateTest
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initializes class object
 // Parameters:
-// name - spi_simple_fd_baudrate_test
+// name - SpiSimpleFdBaudrateTest
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function spi_simple_fd_baudrate_test::new(string name = "spi_simple_fd_baudrate_test",uvm_component parent);
+function SpiSimpleFdBaudrateTest::new(string name = "SpiSimpleFdBaudrateTest",uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Function: setup_master_agent_cfg
+// Function: setupSpiMasterAgentConfig
 // Setup the master agent configuration with the required values
 // and store the handle into the config_db
 //--------------------------------------------------------------------------------------------
-function void spi_simple_fd_baudrate_test::setup_master_agent_cfg();
-  super.setup_master_agent_cfg();
-  env_cfg_h.master_agent_cfg_h.set_baudrate_divisor(.primary_prescalar(1), .secondary_prescalar(2)); 
-endfunction : setup_master_agent_cfg
+function void SpiSimpleFdBaudrateTest::setupSpiMasterAgentConfig();
+  super.setupSpiMasterAgentConfig();
+  spiEnvConfig.spiMasterAgentConfig.setBaudrateDivisor(.primaryPrescalar(1), .secondaryPrescalar(2)); 
+endfunction : setupSpiMasterAgentConfig
 
 
 `endif
