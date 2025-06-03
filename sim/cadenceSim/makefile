@@ -5,29 +5,30 @@
 # make target -s
 
 
-# -n or --just-print
-# The first test I perform on a new makefile target is to invoke make with the --just-print (-n) option.
-# This causes make to read the makefile and print every command it would normally execute to
+# -n or --just-print 
+# The first test I perform on a new makefile target is to invoke make with the --just-print (-n) option. 
+# This causes make to read the makefile and print every command it would normally execute to 
 # update the target but without executing them.
 #
 # make target -n
 
 
-# When you run make with the -i or --ignore-errors flag,
-# errors are ignored in all recipes of all rules.
-# A rule in the makefile for the special target .IGNORE has the same effect,
+# When you run make with the -i or --ignore-errors flag, 
+# errors are ignored in all recipes of all rules. 
+# A rule in the makefile for the special target .IGNORE has the same effect, 
 # if there are no prerequisites. This is less flexible but sometimes useful.
 # When errors are to be ignored, because of -i flag, make treats an error return just like success,
-# except that it prints out a message that tells you the status code the shell exited with,
+# except that it prints out a message that tells you the status code the shell exited with, 
 # and says that the error has been ignored.
 #
-# make target -i
+# make target -i 
+
 
 .IGNORE:
 	compile
 	simulate
 
-# WE can also use the target where we WANT the silent mode
+# WE can also use the target where we WANT the silent mode 
 .SILENT:
 	compile
 	simulate
@@ -38,60 +39,63 @@
 # In this case, usage will be executed
 # Usage
 usage:
-	echo "";
-	echo "-----------------------------------------------------------------";
-	echo "------------------------- Usage ---------------------------------";
-	echo "";
-	echo "make target <options> <variable>=<value>";
-	echo "";
-	echo "To compile use:"
-	echo "make compile";
-	echo "";
-	echo "To simulate use:"
-	echo "make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL>";
-	echo "";
-	echo "Example:":
-	echo "make simulate test=base_test uvm_verbosity=UVM_HIGH";
-	echo "";
-	echo "-----------------------------------------------------------------";
-	echo "-----------------------------------------------------------------";
-	echo "";
+	@echo "";
+	@echo "-----------------------------------------------------------------";
+	@echo "------------------------- Usage ---------------------------------";
+	@echo "";
+	@echo "To compile use:"
+	@echo "make compile";
+	@echo "";
+	@echo "To simulate individual test:"
+	@echo "make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL>";
+	@echo "";
+	@echo "Example:":
+	@echo "make simulate test=base_test uvm_verbosity=UVM_HIGH";
+	@echo "";
+	@echo "To provide seed number (default is random):"
+	@echo "make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL> seed=<value>";
+	@echo "";
+	@echo "To run regression:"
+	@echo "make regression testlist_name=<regression_testlist_name.list>";
+	@echo "";
+	@echo "Example:":
+	@echo "make regression testlist_name=SpiSimpleFdRegression.list";
+	@echo "";
+	@echo "-----------------------------------------------------------------";
+	@echo "-----------------------------------------------------------------";
+	@echo "";
 
-all:
-	make clean; make compile; make simulate;
-
-# TODO(mshariff):
-# Need some work to point to the
-# dir:
-#     mkdir -p logfiles_and_waveforms
-
-# For Assertions use +acc options
+all:	
+	make clean_compile; make compile; make simulate;
+ 
+#VCS_CMD_RAND    = xrun
+#FSDB_DUMP = ./simv +fsdbfile+waves.fsdb
+#FSDB_DUMP1 = +vcs+vcdpluson
+ 
+clean_compile: 
+	rm -rf *_compile.log *_compile.history xcelium.d
+ 
+clean_simulate: 
+	rm -rf *_test
+ 
 compile:
-	make clean_compile;
-
-	# For Xcelium
-	# xrun -c
-	# -xmlibdirname INCA_libs \
-		#
-	# If not given this then the tool will use the default
-	# installation of UVM library
-	# -uvmhome $(UVMHOME) \
-
-	irun -c \
-		-clean \
-		-elaborate \
-		-coverage a \
-		-access +rwc \
-		-64 \
-		-sv \
-		-uvm \
-		+access+rw \
-		-f ../spi_compile.f \
-		-l spi_compile.log \
-		-top worklib.hdl_top:sv \
-		-top worklib.hvl_top:sv \
-		-nclibdirname INCA_libs \
-		-SVA
+	make clean_compile; 
+	#make clean_simulate;
+	xrun -c \
+	-elaborate \
+	-access +rwc \
+	-64 \
+	-sv \
+	-uvm \
+	+access+rw \
+	-f ../SpiCompile.f \
+	-access +r +vcd \
+	-l SpiCompile.log \
+	-top work.SpiHvlTop ../../src/hvlTop/SpiHvlTop.sv \
+	-top work.SpiHdlTop ../../src/hdlTop/SpiHdlTop.sv \
+	-coverage all \
+	-sva \
+	#-lwdgen
 
 	# -s means silent mode
 	#  The command executed along with the output will be displayed on the terminal
@@ -100,9 +104,15 @@ compile:
 	# or use .SILENT
 	make compile_war_err
 
-# Setting a default test as base_test
+ 
+# setting the comamnd for the commmand line argumnet for the test
 ifndef test
-override test = base_test
+override test = SpiBaseTest
+endif
+ 
+# Setting the default seed value to random 
+ifndef seed
+override seed = random 
 endif
 
 # Setting the default uvm_verbosity to UVM_MEDIUM
@@ -110,84 +120,80 @@ ifndef uvm_verbosity
 override uvm_verbosity = UVM_MEDIUM
 endif
 
+ifndef test_folder
+override test_folder := $(test)
+endif
+ 
+ifndef spi_type
+override  spi_type= SIMPLE_SPI
+endif
+
+
+ 
 simulate:
-	echo "INside simulate"
-	make clean_simulate
-	mkdir $(test)
-
-	irun -R \
-		-licqueue \
-		-64 \
-		-l $(test)/$(test).log \
-		+UVM_TESTNAME=$(test) \
-		+UVM_VERBOSITY=$(uvm_verbosity) \
-		-input shm.tcl \
-		-nclibdirname INCA_libs
-
-	#-seed random
-	#-write_metrics \
-		#-covfile coverage_config_file \
-		#-covdut hdl_top \
-		#-uvm \
-		#-coverage All
-
+	mkdir $(test_folder)
+ 
+	xrun -R \
+	-64 \
+	-sv \
+	-uvm \
+	+sv_seed=$(seed) \
+	+UVM_TESTNAME=$(test) \
+	+UVM_VERBOSITY=$(uvm_verbosity) \
+	+define+=$(spi_type) \
+	-l $(test_folder)/$(test).log \
+	-coverage all \
+	-covoverwrite \
+	-covtest $(test_folder)/ \
+  +plusarg_ignore; \
+	#-covreport -covdir ./cov_work -html coverage_html_output
+  #-l transcript_vcs.log
+	#-access +rwc -waves waves.shm \
+	//TODO
+	# need to be updated command for coverage, able to generate .ucd file but imc not working
+ 
+	mv *.vcd $(test_folder)/
+	# For checking and reporting simulation errors
 	make simulate_war_err
 
-	# `ifdef VCD_ON
-	# $dumpfile("fpga_top.vcd");
-	# $dumpvars(0, tb_fpga);
-	# `endif
-	#
-	# `ifdef QUESTA
-	#   $wlfdumpvars(0);
-	# `else
-	#   `ifdef WAVES_OFF
-	#   `else
-	#     $shm_open("waves.shm");
-	#     $shm_probe("AS");
-	#   `endif
-	# `endif
-	#
-
-	# To open the waveform use the below command
-	# vsim -view waveform.wlf &
-	#
-	# To open the wavefrom with saved signals
-	# vsim -view waveform.wlf -do spi_waves.do &
-	#
-	# Coverage
-	# 1) cov_work_paths.txt - Has the path for the coverage files (path consisting of cov_work/scope/test
-	# 2) merge_cov.cmd - Has the below contents
-	#    merge -out all_cov_merge -overwrite -runfile cov_work_paths.txt -message 1 -initial_model union_all
-	#    load -run cov_work/scope/all_cov_merge
-	#    report_metrics -out report_s -detail -metrics all
-	#    OR
-	#    merge -out all_cov_merge -overwrite -runfile cov_work_paths.txt -message 1 -initial_model union_all -out $(merge_dir)
-	#    load -run cov_work/scope/$(merge_dir)
-	#    report_metrics -out report_s -detail -metrics toggle -inst fpga_top
-	# 3) imc -exec merge_cov.cmd
-	#
-
-clean_simulate:
-	rm -rf *_test cov_work
-
-clean_compile:
-	rm -rf INCA_libs *_compile.log *_compile.history
-
-clean:
-	make clean_compile
-	make clean_simulate
-
+ 
+clean_all:
+	make clean_compile;
+	make clean_simulate;
+ 
+## For Regression and coverage merge
+##
+regression:
+	#Run compilation
+	make compile
+	#Run simualtion - regression 
+	python regression_handling.py $(testlist_name)
+	#	# Get the tests from regression list
+	#	grep "_test" ../../src/hvl_top/testlists/spi_standard_mode_regression.list | grep -v "\#" > reg_list
+	#	make simulate test=value #Get the name from regression list
+	#	Merge coverage
+	#make merge_cov_report
+ # make clean
+	
+## For merge to happen, the coverage names for each test must be different
+#merge_cov_report:
+#	rm -rf merged_coverage.ucdb merged_cov_html_report
+#	# Merging all the coverage
+#	vcover merge merged_coverage.ucdb -64 */*.ucdb  
+#	#vcover merge mem_cover mem_cov1 mem_cov2 mem_cov3 mem_cov4 mem_cov5 mem_cov6 mem_cov7 mem_cov8
+#	vcover report -html merged_coverage.ucdb -htmldir ./merged_cov_html_report -details
+#
+ 
 compile_war_err:
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "------------------- Compilation Report --------------------------";
 	echo "";
-	grep "*W" spi_compile.log;
+	grep "** " SpiCompile.log;
 	echo "";
-	grep "*E" spi_compile.log;
+	grep "Error" SpiCompile.log;
 	echo "";
-	echo "Log file path: spi_compile.log"
+	echo "Log file path: SpiCompile.log"
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
@@ -198,24 +204,27 @@ simulate_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "-------------------- Simulation Report --------------------------";
 	echo "";
-	echo "Simulator Errors";
-	grep "\*E" $(test)/$(test).log;
-	echo "";
-	grep "\*F" $(test)/$(test).log;
-	echo "";
-	echo "UVM Fatal";
-	grep "UVM_FATAL" $(test)/$(test).log;
-	echo "";
-	echo "UVM Errors";
-	grep "UVM_ERROR" $(test)/$(test).log;
-	echo "";
-	echo "UVM Warnings";
-	grep "UVM_WARNING" $(test)/$(test).log;
-	echo "";
+	#echo "Simulator Errors";
+	#grep "Error" $(test_folder)/$(test).log;
+	#echo "";
+	#echo "UVM Fatal";
+	#grep "UVM_FATAL" $(test_folder)/$(test).log;
+	#echo "";
+	#echo "UVM Errors";
+	#grep "UVM_ERROR" $(test_folder)/$(test).log;
+	#echo "";
+	#echo "UVM Warnings";
+	#grep "UVM_WARNING" $(test_folder)/$(test).log;
+	#echo "";
 	echo "Testname: $(test)"
-	echo "Log file path: $(test)/$(test).log"
-	echo "Waveform: vsim -view $(test)/waveform.wlf &"
 	echo "";
+	echo "Log file path: $(test_folder)/$(test).log"
+	echo "";
+	echo "Waveform: simvision $(test_folder)/waveform.vcd &"
+	echo "";
+	#echo "Coverage report: firefox $(test_folder)/html_cov_report/index.html &"
+	#echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
 	echo "";
+

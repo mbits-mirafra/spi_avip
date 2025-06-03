@@ -80,6 +80,11 @@ module SpiHdlTop;
    end
    */
 
+  initial begin
+    $dumpfile("waveform.vcd");
+    $dumpvars(0, SpiHdlTop); 
+  end
+
 endmodule : SpiHdlTop
 
 `endif
